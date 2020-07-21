@@ -24,5 +24,8 @@
 
 + [Note](./Note) (My notebook, please use [mark text](https://marktext.app/) to read)
 
-### Tag 那些喜歡開執行緒加速的人
+---
+
+**那些喜歡開執行緒加速的人**
+
 ![線程魔法使.png](線程魔法使.png)
