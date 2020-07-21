@@ -1,14 +1,14 @@
 package Heap;
 import java.util.*;
 
+// This is a simple example of implementing max heap
+// If you want to know how to implement generic heap
+// visit MinHeap.java in the same folder
+
 public class MaxHeap{
     private int[] list;
     private int cap;
     private int top;
-
-    private boolean less(int a, int b){
-        return list[a] < list[b];
-    }
 
     public MaxHeap(){
         this.cap = 8;
@@ -19,8 +19,12 @@ public class MaxHeap{
     private void resize(int new_cap){
         if(new_cap < 8) return;
         int[] new_list = new int[new_cap];
-        System.arraycopy(list, 0, new_list, 0, top-1);
+        System.arraycopy(list, 0, new_list, 0, top);
         this.list = new_list;
+    }
+
+    private boolean less(int a, int b){
+        return list[a] < list[b];
     }
 
     private void swim(int i){
@@ -32,7 +36,7 @@ public class MaxHeap{
     }
 
     private void sink(int i){
-        while(2*i <= top){
+        while((i << 1) <= top){
             int j = i << 1;
             // attemp to compare to the bigger one.
             if(j+1 <= top && less(j, j+1)){
@@ -55,6 +59,7 @@ public class MaxHeap{
         if(top == cap){
             resize(cap << 1);
         }
+
         list[top] = v;
         swim(top);
         top++;
