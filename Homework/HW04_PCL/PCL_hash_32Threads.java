@@ -1,4 +1,4 @@
-public class PCL_hash_32Threads extends LLK{
+public class PCL_hash_32Threads extends PCL{
 	class Slot{ // class for saving slope of the pair as linked list
 		final double slope; final Slot Next;
 		public Slot(final double slope, final Slot Next)
@@ -8,7 +8,7 @@ public class PCL_hash_32Threads extends LLK{
 	final Slot[][] HashTable = new Slot[1<<CORE][]; // Initialize 2^5=32 hash table
 	final Thread[] T = new Thread[HashTable.length-1]; // Initialize 32-1=31 threads, one for main thread
 	volatile boolean result; // the result vaiue. modifier volatile let us not to care synchronous problem
-	final public boolean checkLLK(final int[][] A){
+	final public boolean checkPCL(final int[][] A){
 		result = false; // reset the value, prevent same object-method calling
 
 		final int AEND = A.length-1, TLEN = T.length, FREQ = HashTable.length,
