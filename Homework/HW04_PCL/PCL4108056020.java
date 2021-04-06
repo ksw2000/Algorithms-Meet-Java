@@ -1,15 +1,15 @@
 public class PCL4108056020 extends PCL{
 	class Slot{ // class for saving slope of the pair as linked list
-		final double slope; final Slot Next;
-		public Slot(final double slope, final Slot Next)
-		{ this.slope = slope; this.Next = Next; }
+		final double SLOPE; final Slot NEXT;
+		public Slot(final double slope, final Slot next)
+		{ this.SLOPE = slope; this.NEXT = next; }
 	}
 	final byte CORE = 5; // Binary logarithm of launch thread number
 	final Slot[][] HashTable = new Slot[1<<CORE][]; // Initialize 2^5=32 hash table
 	final Thread[] T = new Thread[HashTable.length-1]; // Initialize 32-1=31 threads, one for main thread
-	volatile boolean result; // the result vaiue. modifier volatile let us not to care synchronous problem
+	volatile boolean result; // the result value. modifier volatile let us not to care synchronous problem
 
-    public boolean checkPCL(int[][] A){
+	public boolean checkPCL(int[][] A){
 		result = false; // reset the value, prevent same object-method calling
 
 		final int AEND = A.length-1, TLEN = T.length, FREQ = HashTable.length,
@@ -25,16 +25,16 @@ public class PCL4108056020 extends PCL{
 					// (re-)set buckets for each i
 					for(HashTable[t] = new Slot[BUCKETNUM], j=i-1; j>-1;){
 						// calculate the slope of the line construct by point i and j
-						final double slope = (A[i][1]-A[j][1])/(double)(A[i][0]-A[j--][0]);
+						final double SLOPE = (A[i][1]-A[j][1])/(double)(A[i][0]-A[j--][0]);
 
-						// modulo for ONLY power-of-2-number: same as (hashcode&0x7fff_ffff)%BUCKETNUM
-						// for keep the hash index in [0,BUCKETMUN]
-						bucket = Double.hashCode(slope)&B&0x7fff_ffff;
+						// hash for ONLY power-of-2-number: same as (hashcode&0x7fff_ffff)%BUCKETNUM
+						// for keep the hash index in [0,BUCKETMUN-1]
+						bucket = Double.hashCode(SLOPE)&B;
 
-						// view through slots of the bucket, hash collisions occur if Solt have Next.
-						for(Slot Pivot = HashTable[t][bucket]; Pivot != null; Pivot = Pivot.Next){
+						// view through slots of the bucket, hash collisions occur if Solt have NEXT.
+						for(Slot pivot = HashTable[t][bucket]; pivot != null; pivot = pivot.NEXT){
 							// find three points in the same line
-							if(Pivot.slope == slope) result = true;
+							if(pivot.SLOPE == SLOPE) result = true;
 
 							// if other thread(s) or this thread found, end up the thread.
 							// the same instruction below is for the same reason.
@@ -42,7 +42,7 @@ public class PCL4108056020 extends PCL{
 						}
 
 						// put slope into the foremost slot of the bucket
-						HashTable[t][bucket] = new Slot(slope, HashTable[t][bucket]);
+						HashTable[t][bucket] = new Slot(SLOPE, HashTable[t][bucket]);
 
 						if(result) return;
 					}
@@ -58,12 +58,12 @@ public class PCL4108056020 extends PCL{
 		// start algorithm to main thread
 		for(int i=AEND-TLEN, j, bucket; i>-1; i-=FREQ){
 			for(HashTable[TLEN] = new Slot[BUCKETNUM], j=i-1; j>-1;){
-				final double slope = (A[i][1]-A[j][1])/(double)(A[i][0]-A[j--][0]);
-				bucket = Double.hashCode(slope)&B&0x7fff_ffff;
-				for(Slot Pivot = HashTable[TLEN][bucket]; Pivot != null; Pivot = Pivot.Next)
-					if(Pivot.slope == slope || result)
+				final double SLOPE = (A[i][1]-A[j][1])/(double)(A[i][0]-A[j--][0]);
+				bucket = Double.hashCode(SLOPE)&B;
+				for(Slot pivot = HashTable[TLEN][bucket]; pivot != null; pivot = pivot.NEXT)
+					if(pivot.SLOPE == SLOPE || result)
 						return true;
-				HashTable[TLEN][bucket] = new Slot(slope, HashTable[TLEN][bucket]);
+				HashTable[TLEN][bucket] = new Slot(SLOPE, HashTable[TLEN][bucket]);
 			}
 			if(result) return true;
 		}
@@ -76,5 +76,5 @@ public class PCL4108056020 extends PCL{
 			}
 		}catch(final InterruptedException e){}
 		return result;
-    }
+	}
 }
