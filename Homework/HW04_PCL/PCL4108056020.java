@@ -9,7 +9,7 @@ public class PCL4108056020 extends PCL{
 	final Thread[] T = new Thread[HashTable.length-1]; // Initialize 32-1=31 threads, one for main thread
 	volatile boolean result; // the result vaiue. modifier volatile let us not to care synchronous problem
 
-    public boolean checkPCL(int[][] array){
+    public boolean checkPCL(int[][] A){
 		result = false; // reset the value, prevent same object-method calling
 
 		final int AEND = A.length-1, TLEN = T.length, FREQ = HashTable.length,
