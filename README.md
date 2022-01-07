@@ -1,6 +1,6 @@
 # Algorithms Meet Java
 
-![](https://img.shields.io/github/license/liao2000/Algorithms-Meet-Java?style=flat-square) ![](https://img.shields.io/github/stars/liao2000/Algorithms-Meet-Java?style=flat-square) ![](https://img.shields.io/github/last-commit/liao2000/Algorithms-Meet-Java?style=flat-square) ![](https://img.shields.io/github/languages/code-size/liao2000/Algorithms-Meet-Java?color=green&style=flat-square)
+![](https://img.shields.io/github/license/liao2000/Algorithms-Meet-Java?color=orange&style=flat-square) ![](https://img.shields.io/github/stars/liao2000/Algorithms-Meet-Java?style=flat-square) ![](https://img.shields.io/github/last-commit/liao2000/Algorithms-Meet-Java?style=flat-square) ![](https://img.shields.io/github/languages/code-size/liao2000/Algorithms-Meet-Java?color=green&style=flat-square)
 
 ## Table of Contents
 
